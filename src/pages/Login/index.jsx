@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import {authUser} from "../../services/user"
 import { WrapperPage } from "../../styles/page.style";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Form,
@@ -11,6 +13,25 @@ import {
 } from "semantic-ui-react";
 
 export const Login = () => {
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginMessageError, setLoginMessageError] = useState("");
+  const navigate = useNavigate();
+
+  const saveUser = (response) => {
+    localStorage.setItem("user", JSON.stringify({id: response, name: user}));
+    navigate("/home");
+  } 
+  const loginError = (response) => {setLoginMessageError(response?.response?.data?.mensagens[0])}
+
+  const loginUser = async () => {
+    const requestUser =       
+    {
+      nickName: user,
+      chave: password
+    }
+    authUser(requestUser, saveUser, loginError)
+  }
   return (
     <WrapperPage>
       <Grid
@@ -29,23 +50,30 @@ export const Login = () => {
                 icon="user"
                 iconPosition="left"
                 placeholder="E-mail address"
+                value={user}
+                onChange={newValue => {setUser(newValue.target.value) 
+                  setLoginMessageError("")}}
               />
               <Form.Input
                 fluid
                 icon="lock"
                 iconPosition="left"
                 placeholder="Password"
-                type="password"
+                type="password" value={password}
+                onChange={newValue => {setPassword(newValue.target.value)
+                  setLoginMessageError("")}}
               />
-
-              <Button color="teal" fluid size="large">
+              <Button color="teal" fluid size="large" onClick={loginUser} to="/">
                 Login
               </Button>
             </Segment>
           </Form>
-          <Message>
-            New to us? <a href="#">Sign Up</a>
-          </Message>
+          { loginMessageError &&
+          <Message floating >{loginMessageError}</Message>
+          }
+        <Message>
+          New to us? <a href="/register">Sign Up</a>
+        </Message>
         </Grid.Column>
       </Grid>
     </WrapperPage>
