@@ -23,19 +23,19 @@ export const PersonalizedMenu = ({ username }) => {
                 Meus Gastos
             </Menu.Item>
             <MenuButtons>
-                <ContainerButtons display={username}>
+                <ContainerButtons display={true}>
                     <Menu.Item>Home</Menu.Item>
                     <Menu.Item>Administrar categorias</Menu.Item>
                     <Menu.Item>Histórico de transações</Menu.Item>
                 </ContainerButtons>
-                <ContainerButtons display={username}>
+                <ContainerButtons display={true}>
                     <Dropdown item simple text={"Olá, " + username}>
                         <Dropdown.Menu>
                             <Dropdown.Item as="a" onClick={logoutUser}> Logout </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </ContainerButtons>
-                 <ContainerButtons display={!username}>          
+                 <ContainerButtons display={true}>          
                     <Menu.Item>Login</Menu.Item>
                 </ContainerButtons>
             </MenuButtons>

@@ -6,31 +6,34 @@ import { PrivateHome } from "./pages/PrivateHome"
 import { ErrorPage } from "../src/pages/ErrorPage";
 import "semantic-ui-css/semantic.min.css";
 import { useEffect, useState } from "react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
 const App = () => {
+  const isLogged = localStorage.getItem("user")
 
-  const [isLoggedUser, setLoggedUser] = useState("");
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: isLogged ? <PrivateHome /> : <Login />,
+      loader: null,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+      loader: null,
+    },
+    {
+      path: "/register",
+      element: <Register />,
+      loader: null,
+    }
+  ]);
+  
+ return <RouterProvider router={router} />
 
-  useEffect(()=> setLoggedUser(localStorage.getItem("user")), []);
-
-  if (isLoggedUser)
-  {
-    return <Router>
-      <Routes>
-        <Route path="*" element={<PrivateHome />} />
-        <Route path="/login" element={<PrivateHome />} />
-        <Route path="/register" element={<PrivateHome />}/>
-      </Routes>
-    </Router>
-  }
-
-  return <Router>
-    <Routes>      
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />}/>
-      <Route path="*" element={<ErrorPage />} />
-    </Routes>
-  </Router>
 }
 
 export default App;

@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import { Button, Modal } from 'semantic-ui-react'
-import TransactionForms from '../TransactionForms';
+import NewTransactionsForms from '../NewTransactionForms';
 
-const AddTransactionModal = ({ userId, updateTransactionTable }) => {
+const NewTransactionModal = ({ userId, updateTransactionTable }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   
   const onCloseModal = () => {
@@ -18,10 +18,10 @@ const AddTransactionModal = ({ userId, updateTransactionTable }) => {
       trigger={<Button primary style={{ alignSelf: 'flex-end', marginRight: '142px'}}>Cadastrar</Button>}
       header='Cadastrar Gastos'
       content={
-        <TransactionForms userId={userId} onCloseModal={onCloseModal}/>
+        <NewTransactionsForms userId={userId} onCloseModal={onCloseModal}/>
       }
       />
   )
 }
 
-export default AddTransactionModal;
+export default NewTransactionModal;

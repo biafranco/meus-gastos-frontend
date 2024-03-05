@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { WrapperPage } from "../../styles/page.style";
 import { PersonalizedMenu } from "../../components/PersonalizedMenu";
-import AddTransactionModal from "../../components/AddTransactionModal";
+import NewTransactionModal from "../../components/NewTransactionModal";
 import { getTransactions } from "../../services/transactions";
 import ListTransactions from "../../components/ListTransactions";
 import {
@@ -31,8 +31,8 @@ export const PrivateHome = () => {
       <div style={{ width: "100%" }}>
         <PersonalizedMenu username={username} />
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <AddTransactionModal userId={userId} updateTransactionTable={updateTransactionTable} />
-          <ListTransactions userId={userId} transactions={transactions} />
+          <NewTransactionModal userId={userId} updateTransactionTable={updateTransactionTable} />
+          <ListTransactions userId={userId} transactions={transactions} updateTransactionTable={updateTransactionTable} />
         </div>
       </div>
 

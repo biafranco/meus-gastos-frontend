@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {CurrencyFormat} from 'react-currency-format';
+import NewTransactionModal from "../NewTransactionModal";
+import NewTransactionsForms from "../NewTransactionForms";
 import {
     TableRow,
     TableHeaderCell,
@@ -8,10 +10,24 @@ import {
     TableBody,
     Icon,
     Table,
-    Button
+    Modal
 } from 'semantic-ui-react';
 
-const ListTransactions = ({ userId, transactions }) => {
+const ListTransactions = ({ userId, transactions, updateTransactionTable }) => {
+
+    const [selectedId, setSelectedId] = useState(null);
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const handleRowClick = (transactionId) => {
+        setSelectedId(transactionId);
+        setModalOpen(true);
+    }
+
+    const onCloseModal = () => {
+        setSelectedId(null);
+        setModalOpen(false);
+        updateTransactionTable();
+    }
 
     const formatDate = (inputDate) => {
         const date = new Date(inputDate);
@@ -30,7 +46,9 @@ const ListTransactions = ({ userId, transactions }) => {
         return transactionDate.getMonth() === currentDate.getMonth();
     });
 
+
     return (
+        <>
         <Table celled striped style={{ maxWidth: '80%' }}>
             <TableHeader>
                 <TableRow>
@@ -43,8 +61,8 @@ const ListTransactions = ({ userId, transactions }) => {
 
             <TableBody>
                 {
-                    currentMonthTransactions.map((t) => (
-                        <TableRow>
+                    transactions.map((t) => (
+                        <TableRow key={t.transacaoId} onClick={() => handleRowClick(t.transacaoId)}>
                             <TableCell>{t.descricao}</TableCell>
                             <TableCell>{t.categoriaNome}</TableCell>
                             <TableCell> {formatCurrency(t.quantiaDinheiro.toString())}
@@ -55,6 +73,19 @@ const ListTransactions = ({ userId, transactions }) => {
                 }
             </TableBody>
         </Table>
+
+        <Modal
+            onClose={() => onCloseModal()}
+            open={isModalOpen}
+            size='large'
+        >
+            <Modal.Header>Editar Gastos</Modal.Header>
+            <Modal.Content>
+            <NewTransactionsForms userId={userId} onCloseModal={onCloseModal} editTransacao={transactions.filter((t) => t.transacaoId === selectedId).shift()} />
+            </Modal.Content>
+        </Modal>
+    </>
+        
     )
 }
 

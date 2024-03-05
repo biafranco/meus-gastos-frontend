@@ -20,7 +20,7 @@ export const Login = () => {
 
   const saveUser = (response) => {
     localStorage.setItem("user", JSON.stringify({id: response, name: user}));
-    navigate("/home");
+    navigate("/");
   } 
   const loginError = (response) => {setLoginMessageError(response?.response?.data?.mensagens[0])}
 
