@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {authUser} from "../../services/user"
 import { WrapperPage } from "../../styles/page.style";
-import { useNavigate } from "react-router-dom";
 import {
   Button,
   Form,
@@ -16,12 +15,12 @@ export const Login = () => {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [loginMessageError, setLoginMessageError] = useState("");
-  const navigate = useNavigate();
 
   const saveUser = (response) => {
     localStorage.setItem("user", JSON.stringify({id: response, name: user}));
-    navigate("/");
+    window.location.href = ("/home");
   } 
+
   const loginError = (response) => {setLoginMessageError(response?.response?.data?.mensagens[0])}
 
   const loginUser = async () => {
@@ -59,7 +58,7 @@ export const Login = () => {
                 icon="lock"
                 iconPosition="left"
                 placeholder="Password"
-                type="password" value={password}
+                type="password"
                 onChange={newValue => {setPassword(newValue.target.value)
                   setLoginMessageError("")}}
               />

@@ -4,7 +4,7 @@ import {PersonalizedMenu} from "../../components/PersonalizedMenu"
 
 export const PublicHome = () => {
     const user = localStorage.getItem("user") ?? "";
-    const username =  JSON.parse(user)?.name;
+    const username = user?.name;
 
     return (
       <WrapperPage>

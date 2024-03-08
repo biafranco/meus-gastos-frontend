@@ -73,9 +73,10 @@ const NewTransactionsForms = ({ userId, onCloseModal, editTransacao }) => {
     )
 
     useEffect(() => {
-        getCategories(userId, mountCategories, handleMessageError);
+        getCategories(userId, mountCategories, teste);
     }, []);
-
+    
+    const teste =  () => console.log('here');
     const handleMessageError = (response) => {
         setErrorMessage(response?.response?.data?.mensagens[0]);
         console.log(errorMessage);
@@ -119,8 +120,8 @@ const NewTransactionsForms = ({ userId, onCloseModal, editTransacao }) => {
                 placeholder='Conte-nos mais sobre seus gastos...'
             />
            <FormGroup style={{ display: "flex", justifyContent: "space-between"}}>
-            <FormButton backgroundColor="#4CAF50" onClick={() => registerNewTransaction()}>Enviar</FormButton>
-            {editTransacao && <FormButton backgroundColor="#f44336" onClick={() => registerNewTransaction()}>
+            <FormButton onClick={() => registerNewTransaction()}>Enviar</FormButton>
+            {editTransacao && <FormButton onClick={() => deleteTransactionButton()}>
             <Icon name="trash" size="large" style={{ marginRight: '0' }} /> Excluir
         </FormButton>}
         </FormGroup>
